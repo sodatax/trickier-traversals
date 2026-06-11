@@ -60,6 +60,7 @@ public class Traversals {
    * @return a list of node values in a top-to-bottom order, or an empty list if the tree is null
    */
   public static <T> List<T> collectLevelOrderValues(TreeNode<T> node) {
+    if(node==null)return new ArrayList<T>();
     return null;
   }
 
@@ -71,7 +72,17 @@ public class Traversals {
    * @return the number of unique values in the tree, or 0 if the tree is null
    */
   public static int countDistinctValues(TreeNode<Integer> node) {
-    return 0;
+    if(node==null)return 0;
+    int count = 0;
+
+    if(node.left!=null && node.left.value != node.value ){
+      count = 1;
+    }
+    if(node.right!=null && node.right.value != node.value){
+      count = 1;
+    }
+    
+    return count + countDistinctValues(node.left) + countDistinctValues(node.right);
   }
 
   /**
@@ -83,7 +94,11 @@ public class Traversals {
    * @return true if there exists a strictly increasing root-to-leaf path, false otherwise
    */
   public static boolean hasStrictlyIncreasingPath(TreeNode<Integer> node) {
-    return false;
+    if(node==null)return false;
+    if(node.value > node.left.value || node.value > node.right.value) return false;
+    hasStrictlyIncreasingPath(node.left);
+    hasStrictlyIncreasingPath(node.right);
+    return true;
   }
 
   // OPTIONAL CHALLENGE
